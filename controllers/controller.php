@@ -1,6 +1,6 @@
 <?php
 
-$action = $_GET["action"] ?? "display";
+$action = isset($_GET["action"]) ? $_GET["action"] : "display";
 
 switch ($action) {
 
@@ -27,12 +27,17 @@ switch ($action) {
   case 'display':
   default:
     include "../models/PostManager.php";
-    $posts = GetAllPosts();
-
+    if (isset($_GET['search'])) {
+      $posts = SearchInPosts($_GET['search']);
+    } else {
+      $posts = GetAllPosts();
+    }
+    
     include "../models/CommentManager.php";
     $comments = array();
 
     foreach ($posts as $onePost) {
+      $postId = $onePOst['id'];
       $comments[$onePost['id']] = GetAllCommentsFromPostId($onePost['id']);
     }
 
