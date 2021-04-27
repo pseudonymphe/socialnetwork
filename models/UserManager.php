@@ -23,7 +23,8 @@ function GetUserIdFromUserAndPassword($username, $password)
   $nbOfUsersWithThisPasswordAndNickname = count($users);
 
   if ($nbOfUsersWithThisPasswordAndNickname == 1) {
-    var_dump($users);
+    $connectingUser = $users[0];
+    return $connectingUser['id'];
   } else {
     return -1;
   }
